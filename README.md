@@ -1,5 +1,5 @@
 # Coinverter
 
-## Nicolas Rojas & Isabela Caceres
+## Nicolas Rojas & Isabela Cáceres
 
 Convert currencies using Go.
