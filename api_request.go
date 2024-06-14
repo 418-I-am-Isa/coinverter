@@ -55,6 +55,6 @@ func main() {
 
 		value, _ := response.Data[currency]
 
-		fmt.Printf("Value %s: %f\n", currency, value)
+		fmt.Printf("Value %s: %f %s\n", currency, value, baseCurrency)
 	}
 }
