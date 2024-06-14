@@ -17,7 +17,11 @@ type Response struct {
 func main() {
 	baseURL := "https://api.freecurrencyapi.com/v1/latest"
 	apiKey := os.Getenv("API_KEY")
-	baseCurrency :=  os.Args[2]
+	if len(apiKey) == 0 {
+		fmt.Fprintln(os.Stderr, "Error. No API key found in environment valiables. Set it in the API_KEY variable.")
+		os.Exit(1)
+	}
+	baseCurrency := os.Args[2]
 	targetCurrencies := os.Args[1]
 
 	apiKeyParam := "apikey=" + apiKey
