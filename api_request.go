@@ -13,7 +13,6 @@ type Response struct {
 	Data map[string]float64 `json:"data"`
 }
 
-
 func main() {
 	baseURL := "https://api.freecurrencyapi.com/v1/latest"
 	apiKey := os.Getenv("API_KEY")
@@ -32,6 +31,10 @@ func main() {
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		os.Exit(1)
+	}
+	if resp.StatusCode != 200 {
+		fmt.Fprintf(os.Stderr, "HTTP response code: %d\n", resp.StatusCode)
 		os.Exit(1)
 	}
 
