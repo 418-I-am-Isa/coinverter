@@ -6,17 +6,23 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"encoding/json"
 )
+
+type Response struct {
+    Data map[string]float64 `json:"data"`
+}
+
 
 func main() {
 	baseURL := "https://api.freecurrencyapi.com/v1/latest"
 	apiKey := os.Getenv("API_KEY")
-	baseCurrency := "EUR"
-	targetCurrencies := []string{"USD", "AUD"}
+	baseCurrency :=  os.Args[2]
+	targetCurrencies := os.Args[1]
 
 	apiKeyParam := "apikey=" + apiKey
 	baseCurrencyParam := "base_currency=" + baseCurrency
-	currenciesParam := "currencies=" + strings.Join(targetCurrencies, ",")
+	currenciesParam := "currencies=" + targetCurrencies
 	url := baseURL + "?" + strings.Join([]string{apiKeyParam, baseCurrencyParam, currenciesParam}, "&")
 
 	resp, err := http.Get(url)
@@ -32,5 +38,17 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("%s\n", data)
+	currencyList := strings.Split(targetCurrencies, ",")
+    for _, currency := range currencyList {
+		var response Response
+    	err = json.Unmarshal(data, &response)
+    	if err != nil {
+    	    fmt.Fprintf(os.Stderr, "fetch: unmarshalling %s: %v\n", url, err)
+    	    os.Exit(1)
+    	}
+
+    	value, _ := response.Data[currency]
+
+    	fmt.Printf("Value %s: %f\n", currency, value)
+	}
 }
