@@ -1,16 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"strings"
-	"encoding/json"
 )
 
 type Response struct {
-    Data map[string]float64 `json:"data"`
+	Data map[string]float64 `json:"data"`
 }
 
 
@@ -39,16 +39,16 @@ func main() {
 	}
 
 	currencyList := strings.Split(targetCurrencies, ",")
-    for _, currency := range currencyList {
+	for _, currency := range currencyList {
 		var response Response
-    	err = json.Unmarshal(data, &response)
-    	if err != nil {
-    	    fmt.Fprintf(os.Stderr, "fetch: unmarshalling %s: %v\n", url, err)
-    	    os.Exit(1)
-    	}
+		err = json.Unmarshal(data, &response)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error unmarshalling %s: %v\n", url, err)
+			os.Exit(1)
+		}
 
-    	value, _ := response.Data[currency]
+		value, _ := response.Data[currency]
 
-    	fmt.Printf("Value %s: %f\n", currency, value)
+		fmt.Printf("Value %s: %f\n", currency, value)
 	}
 }
