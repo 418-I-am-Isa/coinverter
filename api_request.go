@@ -33,8 +33,8 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
-	if resp.StatusCode != 200 {
-		fmt.Fprintf(os.Stderr, "HTTP response code: %d\n", resp.StatusCode)
+	if status := resp.StatusCode; status != 200 {
+		fmt.Fprintf(os.Stderr, "HTTP response code: %d\n", status)
 		os.Exit(1)
 	}
 
@@ -48,8 +48,7 @@ func main() {
 	currencyList := strings.Split(targetCurrencies, ",")
 	for _, currency := range currencyList {
 		var response Response
-		err = json.Unmarshal(data, &response)
-		if err != nil {
+		if err = json.Unmarshal(data, &response); err != nil {
 			fmt.Fprintf(os.Stderr, "Error unmarshalling %s: %v\n", url, err)
 			os.Exit(1)
 		}
