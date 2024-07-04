@@ -163,7 +163,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	s := "Select the currencies\n\n"
+	s := `* Please select the base currency with the Enter key
+* To select the target currencies use the Space bar
+* To exit the program and process the conversion press q
+
+`
 
 	for i, choice := range m.choices {
 		cursor := " "
