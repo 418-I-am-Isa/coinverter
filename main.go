@@ -97,6 +97,8 @@ func conversion(baseCurrency string, targetCurrencies []string) {
 		os.Exit(1)
 	}
 
+	baseQuantity := 1.0
+
 	data, err := io.ReadAll(resp.Body)
 	resp.Body.Close()
 	if err != nil {
@@ -111,9 +113,9 @@ func conversion(baseCurrency string, targetCurrencies []string) {
 			os.Exit(1)
 		}
 
-		value := response.Data[currency]
+		value := baseQuantity * response.Data[currency]
 
-		fmt.Printf("1 %s = %f %s\n", baseCurrency, value, currency)
+		fmt.Printf("%f %s = %f %s\n", baseQuantity, baseCurrency, value, currency)
 	}
 }
 
