@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -242,14 +243,17 @@ func main() {
 		}
 		sort.Strings(targetCurrencies)
 
-		baseQuantity, err := strconv.ParseFloat(m.textInput.View(), 64)
+		re := regexp.MustCompile(`\d+`)
+		strQuantity := strings.Join(re.FindAllString(m.textInput.View(), -1), "")
+		baseQuantity, err := strconv.ParseFloat(strQuantity, 64)
 
-		if err == nil {
+		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error Converting to float %s: %v\n", m.textInput.View(), err)
 			os.Exit(1)
 		}
-		fmt.Printf("baseQuantity: %f \n", baseQuantity)
-		fmt.Printf("Text Input %s \n", m.textInput.View())
+		fmt.Printf("Text Input: %s\n", m.textInput.View())
+		fmt.Printf("strQuantity: %s\n", strQuantity)
+		fmt.Printf("baseQuantity: %f\n", baseQuantity)
 		conversion(baseCurrency, targetCurrencies, baseQuantity)
 	}
 }
