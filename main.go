@@ -128,8 +128,7 @@ func conversion(baseCurrency string, targetCurrencies []string, baseQuantity flo
 func initialModel() model {
 	ti := textinput.New()
 	ti.Placeholder = "1"
-	ti.Focus()
-	ti.CharLimit = 156
+	ti.CharLimit = 20
 	ti.Width = 20
 	return model{
 		choices:      getCurrencies(),
@@ -171,6 +170,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				delete(m.selected, m.cursor)
 			}
 			m.baseCurrency = m.cursor
+		case "tab":
+			m.textInput.Focus()
 		}
 	}
 
@@ -196,6 +197,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	s := `* Please select the base currency with the Enter key
 * To select the target currencies use the Space bar
+* Once selected the target currencues and the base currency press tab to enter the amount to convert
 * To exit the program and process the conversion press q
 
 `
@@ -244,16 +246,13 @@ func main() {
 		sort.Strings(targetCurrencies)
 
 		re := regexp.MustCompile(`\d+`)
-		strQuantity := strings.Join(re.FindAllString(m.textInput.View(), -1), "")
+		strQuantity := strings.Join(re.FindAllString(m.textInput.View()[2:], -1), "")
 		baseQuantity, err := strconv.ParseFloat(strQuantity, 64)
 
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error Converting to float %s: %v\n", m.textInput.View(), err)
 			os.Exit(1)
 		}
-		fmt.Printf("Text Input: %s\n", m.textInput.View())
-		fmt.Printf("strQuantity: %s\n", strQuantity)
-		fmt.Printf("baseQuantity: %f\n", baseQuantity)
 		conversion(baseCurrency, targetCurrencies, baseQuantity)
 	}
 }
