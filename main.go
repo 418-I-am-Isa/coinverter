@@ -47,7 +47,7 @@ type ConversionResponse struct {
 
 func getCurrencies() []string {
 	baseURL := "https://api.freecurrencyapi.com/v1/currencies"
-	apiKey := os.Getenv("API_KEY")
+	apiKey := os.Getenv("FREE_CURRENCY_API_KEY")
 	if len(apiKey) == 0 {
 		fmt.Fprintln(os.Stderr, "Error. No API key found in environment valiables. Set it in the API_KEY variable.")
 		os.Exit(1)
@@ -84,7 +84,7 @@ func getCurrencies() []string {
 
 func conversion(baseCurrency string, targetCurrencies []string, baseQuantity float64) {
 	baseURL := "https://api.freecurrencyapi.com/v1/latest"
-	apiKey := os.Getenv("API_KEY")
+	apiKey := os.Getenv("FREE_CURRENCY_API_KEY")
 	if len(apiKey) == 0 {
 		fmt.Fprintln(os.Stderr, "Error. No API key found in environment valiables. Set it in the API_KEY variable.")
 		os.Exit(1)
@@ -248,7 +248,6 @@ func main() {
 		re := regexp.MustCompile(`\d+`)
 		strQuantity := strings.Join(re.FindAllString(m.textInput.View()[2:], -1), "")
 		baseQuantity, err := strconv.ParseFloat(strQuantity, 64)
-
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error Converting to float %s: %v\n", m.textInput.View(), err)
 			os.Exit(1)

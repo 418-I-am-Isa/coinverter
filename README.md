@@ -8,7 +8,7 @@ Convert currencies using Go.
 
 Coinverter uses [freeCurrencyAPI](https://freecurrencyapi.com/) to source information. 
 
-As such `API_KEY` must be set:
+As such `FREE_CURRENCY_API_KEY` must be set:
 
 ```sh
 export API_KEY="<FreeCurrencyAPI_KEY"
