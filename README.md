@@ -11,7 +11,7 @@ Coinverter uses [freeCurrencyAPI](https://freecurrencyapi.com/) to source inform
 As such `FREE_CURRENCY_API_KEY` must be set:
 
 ```sh
-export API_KEY="<FreeCurrencyAPI_KEY"
+export FREE_CURRENCY_API_KEY="<FreeCurrencyAPI_KEY"
 ```
 
 
