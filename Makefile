@@ -4,7 +4,7 @@ GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 BINARY_NAME=coinverter
-BINARY_PATH=./bin/$(BINARY_NAME)
+BINARY_PATH=./$(BINARY_NAME)
 
 # Targets
 all: build
@@ -20,6 +20,6 @@ clean:
 	rm -rf $(BINARY_PATH)
 
 test:
-	$(GOTEST) ./...
+	$(GOTEST) ./... -v
 
 .PHONY: all build run clean test
