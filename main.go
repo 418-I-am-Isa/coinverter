@@ -49,7 +49,7 @@ func getCurrencies() []string {
 	baseURL := "https://api.freecurrencyapi.com/v1/currencies"
 	apiKey := os.Getenv("FREE_CURRENCY_API_KEY")
 	if len(apiKey) == 0 {
-		fmt.Fprintln(os.Stderr, "Error. No API key found in environment valiables. Set it in the API_KEY variable.")
+		fmt.Fprintln(os.Stderr, "Error. No API key found in environment valiables. Set it in the FREE_CURRENCY_API_KEY environment variable. You can obtain your API key in freecurrencyapi.com/")
 		os.Exit(1)
 	}
 	url := baseURL + "?" + "apikey=" + apiKey
