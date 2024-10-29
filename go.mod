@@ -1,4 +1,4 @@
-module github.com/Nirogu/coinverter
+module github.com/418-I-am-Isa/coinverter
 
 go 1.22.0
 

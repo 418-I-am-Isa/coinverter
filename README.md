@@ -18,7 +18,7 @@ export FREE_CURRENCY_API_KEY="<Your personal FreeCurrency API key>"
 ## Installation 🔨
 1. Clone the repository
   ```sh
-  git clone https://github.com/nirogu/coinverter.git
+  git clone https://github.com/418-I-am-Isa/coinverter.git
   ```
    
 2. Go to the repository directory
