@@ -45,6 +45,11 @@ type ConversionResponse struct {
 	Data map[string]float64 `json:"data"`
 }
 
+func stripRegex(text string) string {
+	reg, _ := regexp.Compile("[^0-9]+")
+	return reg.ReplaceAllString(text, "")
+}
+
 func getCurrencies() []string {
 	baseURL := "https://api.freecurrencyapi.com/v1/currencies"
 	apiKey := os.Getenv("FREE_CURRENCY_API_KEY")
@@ -127,7 +132,7 @@ func conversion(baseCurrency string, targetCurrencies []string, baseQuantity flo
 
 func initialModel() model {
 	ti := textinput.New()
-	ti.Placeholder = "1"
+	ti.Placeholder = ""
 	ti.CharLimit = 20
 	ti.Width = 20
 	return model{
@@ -245,11 +250,10 @@ func main() {
 		}
 		sort.Strings(targetCurrencies)
 
-		re := regexp.MustCompile(`\d+`)
-		strQuantity := strings.Join(re.FindAllString(m.textInput.View()[2:], -1), "")
+		strQuantity := stripRegex(m.textInput.Value())
 		baseQuantity, err := strconv.ParseFloat(strQuantity, 64)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error Converting to float %s: %v\n", m.textInput.View(), err)
+			fmt.Fprintf(os.Stderr, "Error Converting to float %s: %v\n", strQuantity, err)
 			os.Exit(1)
 		}
 		conversion(baseCurrency, targetCurrencies, baseQuantity)
